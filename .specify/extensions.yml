@@ -1,4 +1,5 @@
 installed:
+- assess
 - docs-to-spec
 settings:
   auto_execute_hooks: true
