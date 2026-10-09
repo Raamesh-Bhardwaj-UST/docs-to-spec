@@ -24,6 +24,9 @@ Optional: a single source id to refresh.
    - git auth or 403 on a wiki → run the harvest script once from a terminal (Credential Manager sign-in) or switch `auth`.
    - 404 on a wiki → the wiki is disabled or has no pages, or you lack access.
    - 401/403 on issues → GH_TOKEN missing or lacks Issues: Read on that repo.
+   - CONFLUENCE_TOKEN / CONFLUENCE_EMAIL not set → restart the server and enter them at the prompts (Cloud: account e-mail + API token; Data Center: personal access token only).
+   - Confluence 401/403 → wrong token or e-mail, wrong `auth` for the deployment, or no view permission on the space.
+   - Confluence 404 or "did not return JSON" → check `base_url` (Cloud must be `https://<site>.atlassian.net/wiki`; Data Center includes any context path).
 4. Call `snapshot_status` and show a table: source, type, documents, fetched_at, redactions.
 5. If any redactions are non-zero, say how many and that the values were replaced with `[REDACTED:<type>]` tokens.
 6. **Gate.** Tell the user to review `.specify/harvest/raw/manifest.json` and a sample of files, then commit the snapshot before running `/speckit-docs-to-spec-extract`. Stop here.

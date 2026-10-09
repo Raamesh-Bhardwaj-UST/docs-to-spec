@@ -8,6 +8,28 @@ import sys
 from pathlib import Path
 
 INPUT_ID = "docs-to-spec-gh-token"
+CONFLUENCE_EMAIL_ID = "docs-to-spec-confluence-email"
+CONFLUENCE_TOKEN_ID = "docs-to-spec-confluence-token"
+INPUTS = [
+    {
+        "type": "promptString",
+        "id": INPUT_ID,
+        "description": "GitHub PAT for docs-to-spec (leave empty for public sources or gcm-only wikis)",
+        "password": True,
+    },
+    {
+        "type": "promptString",
+        "id": CONFLUENCE_EMAIL_ID,
+        "description": "Atlassian account e-mail for Confluence Cloud (leave empty for Data Center or no Confluence sources)",
+        "password": False,
+    },
+    {
+        "type": "promptString",
+        "id": CONFLUENCE_TOKEN_ID,
+        "description": "Confluence API token (Cloud) or personal access token (Data Center); leave empty if unused",
+        "password": True,
+    },
+]
 
 
 def configure_vscode(root: Path) -> Path:
@@ -25,13 +47,9 @@ def configure_vscode(root: Path) -> Path:
     exe_name = "docs-to-spec-mcp.exe" if os.name == "nt" else "docs-to-spec-mcp"
     exe = Path(sys.executable).with_name(exe_name)
     inputs = data.setdefault("inputs", [])
-    if not any(i.get("id") == INPUT_ID for i in inputs):
-        inputs.append({
-            "type": "promptString",
-            "id": INPUT_ID,
-            "description": "GitHub PAT for docs-to-spec (leave empty for public sources or gcm-only wikis)",
-            "password": True,
-        })
+    for wanted in INPUTS:
+        if not any(i.get("id") == wanted["id"] for i in inputs):
+            inputs.append(dict(wanted))
     data.setdefault("servers", {})["docs-to-spec"] = {
         "type": "stdio",
         "command": str(exe),
@@ -39,6 +57,8 @@ def configure_vscode(root: Path) -> Path:
         "env": {
             "DOCS_TO_SPEC_ROOT": "${workspaceFolder}",
             "GH_TOKEN": "${input:" + INPUT_ID + "}",
+            "CONFLUENCE_EMAIL": "${input:" + CONFLUENCE_EMAIL_ID + "}",
+            "CONFLUENCE_TOKEN": "${input:" + CONFLUENCE_TOKEN_ID + "}",
         },
     }
     path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")

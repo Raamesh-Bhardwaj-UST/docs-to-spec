@@ -38,6 +38,7 @@ def _card(match: re.Match) -> Optional[str]:
 _RULES: list[tuple[str, re.Pattern, Replacement]] = [
     ("private_key", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----.*?-----END [A-Z ]*PRIVATE KEY-----", re.S), None),
     ("github_token", re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{22,})"), None),
+    ("atlassian_token", re.compile(r"\bATATT3[A-Za-z0-9_\-=]{20,}"), None),
     ("aws_key", re.compile(r"\b(?:AKIA|ASIA)[0-9A-Z]{16}\b"), None),
     ("jwt", re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}"), None),
     ("bearer", re.compile(r"(?i)\bbearer\s+(?!\[REDACTED)[A-Za-z0-9\-._~+/]{20,}=*"), "Bearer [REDACTED:bearer]"),

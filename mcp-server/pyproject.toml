@@ -1,7 +1,7 @@
 [project]
 name = "docs-to-spec-mcp"
 version = "0.1.0"
-description = "Local MCP server that harvests wikis, issues and docs into a redacted snapshot for Spec Kit"
+description = "Local MCP server that harvests wikis, issues, Confluence and docs into a redacted snapshot for Spec Kit"
 requires-python = ">=3.11"
 dependencies = [
   "mcp>=1.2,<2",

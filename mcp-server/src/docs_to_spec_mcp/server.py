@@ -19,7 +19,7 @@ mcp = FastMCP("docs-to-spec")
 def list_sources() -> list[dict]:
     """List the sources configured in .specify/docs-to-spec/sources.yml."""
     cfg = load_config()
-    keys = ("repo", "path", "labels", "state")
+    keys = ("repo", "path", "labels", "state", "base_url", "space", "ancestor", "cql")
     return [{"id": s["id"], "type": s["type"], **{k: s[k] for k in keys if k in s}} for s in cfg["sources"]]
 
 

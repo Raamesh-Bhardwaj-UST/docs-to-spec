@@ -21,6 +21,17 @@ sources:
     max_items: 200
     include_comments: true
 
+  - id: team-confluence
+    type: confluence
+    base_url: https://YOUR-SITE.atlassian.net/wiki   # Data Center: https://confluence.example.com (with any context path)
+    # deployment: cloud              # cloud | datacenter (default: cloud for *.atlassian.net, else datacenter)
+    # auth: basic                    # basic = CONFLUENCE_EMAIL + CONFLUENCE_TOKEN (Cloud default); bearer = CONFLUENCE_TOKEN PAT (Data Center default)
+    space: SPACEKEY                  # at least one of space, ancestor, labels or cql is required
+    # ancestor: "123456"             # only pages under this page id
+    # labels: ["requirements"]       # multiple labels = AND
+    # cql: 'space = "SPACEKEY" AND label = "requirements"'   # replaces space/ancestor/labels; pages only
+    max_items: 200
+
   - id: repo-docs
     type: local
     path: docs                       # relative to the repo root

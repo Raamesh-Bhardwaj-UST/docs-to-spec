@@ -182,4 +182,7 @@ def fetch_documents(src: dict, refresh: bool = False) -> list[Document]:
         return issue_documents(src)
     if kind == "local":
         return local_documents(src)
+    if kind == "confluence":
+        from .confluence import confluence_documents  # imported here: confluence imports Document from this module
+        return confluence_documents(src)
     raise ValueError(f"Unsupported source type '{kind}' for source '{src.get('id')}'.")

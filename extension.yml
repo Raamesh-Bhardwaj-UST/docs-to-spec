@@ -4,7 +4,7 @@ extension:
   id: "docs-to-spec"
   name: "Docs to Spec"
   version: "1.0.0"
-  description: "Harvest wikis, issues and docs via a local MCP server, extract cited EARS requirements, review them, clarify gaps, and propose specs."
+  description: "Harvest GitHub wikis and issues, Confluence and local docs via a local MCP server, extract cited EARS requirements, review them, clarify gaps, and propose specs."
   author: "Raamesh Bhardwaj (UST PACE)"
   repository: "https://github.com/Raamesh-Bhardwaj-UST/docs-to-spec"
   license: "MIT"
@@ -35,4 +35,4 @@ provides:
       file: "commands/speckit.docs-to-spec.propose.md"
       description: "Propose candidate features with assess and specify prompts"
 
-tags: ["requirements", "wiki", "mcp", "ears", "brownfield", "ust"]
+tags: ["requirements", "wiki", "confluence", "mcp", "ears", "brownfield", "ust"]

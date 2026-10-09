@@ -26,3 +26,8 @@ sources:
     path: docs                       # relative to the repo root
     include: ["*.md"]
     exclude: []
+
+  - id: astra-alert-rules
+    type: confluence
+    base_url: https://ust-pace.atlassian.net/wiki
+    ancestor: "1398800396"
