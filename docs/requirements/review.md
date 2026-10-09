@@ -1,8 +1,8 @@
 # Requirements review
 
-Reviewed `docs/requirements/harvested.md` against `.specify/docs-to-spec/requirements-rubric.md` and `.github/agents/requirements-reviewer.agent.md`. Round-trip and grounding checks used `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`; all cited sections exist and support the grounded statements. No requirement was found to be unsupported, and no architecture instructions were present to assess additional feasibility constraints.
+Reviewed `docs/requirements/harvested.md` against `.specify/docs-to-spec/requirements-rubric.md` and `.github/agents/requirements-reviewer.agent.md`. Round-trip and grounding checks used `.specify/harvest/raw/astra-alert-rules/page-1398800396.md` (REQ-001–REQ-022) and `.specify/harvest/raw/astra-alert-rules/page-1514635295.md` (REQ-023–REQ-032); all cited sections exist and support the grounded statements. No requirement was found to be unsupported, and no architecture instructions were present to assess additional feasibility constraints.
 
-Two revision passes were completed. The first used source-stated numeric examples in REQ-007 and REQ-017 and split REQ-016's HTTP 5XX and backend-stacktrace tests to retain the source's unresolved category label. The second found no further source-only changes that could resolve the remaining ambiguities. The 19 unresolved requirements are marked `needs-human` in `harvested.md`; IDs remain stable.
+This round (snapshot 2026-10-09T08:54:19Z) re-checked REQ-001–REQ-022 against an unchanged source; their scores and dispositions carry forward. REQ-023–REQ-032 are new. Loop 1 rewrote REQ-023 so its statement, success criterion and acceptance criteria all describe the same thing (the Messaging Endpoint is the backend's public HTTPS URL), added AC-023.2 for public reachability, and raised Q-023 on request authentication; replaced REQ-031's unmeasurable success criterion with the source-stated "expiry is set" and moved the missing period to AC-031.3; and marked the unstated approval step in AC-032.1. Loop 2 found no further source-only changes. IDs remain stable.
 
 | ID | Score (x/8) | Failing criteria | Evidence (failing words) | Proposed rewrite or question |
 |----|-------------|------------------|--------------------------|------------------------------|
@@ -28,6 +28,16 @@ Two revision passes were completed. The first used source-stated numeric example
 | REQ-020 | 6/8 | C2, C3 | “business-critical services”; “higher” | Q-002: identify services and the priority relationship. Misreading: read “higher” as a larger number despite P1 being worst. |
 | REQ-021 | 6/8 | C2, C3 | “below the applicable threshold” | Q-005: define the threshold and measurement. Misreading: reuse a different alert's threshold. |
 | REQ-022 | 7/8 | C2 | “message semantics” | Q-004: define allowed cues and precedence when failure and noise cues coexist. Misreading: decide from an unlisted phrase. |
+| REQ-023 | 7/8 | C2 | “`<public-domain>`”; no stated request validation on a public endpoint | Rewritten (loop 1): statement originally said the backend "exposes" the endpoint while the success criterion and AC checked only the Azure Bot setting. Q-022 (domain), Q-023 (authentication). Misreading: publish `/api/messages` without rejecting requests that do not come from Azure Bot Service. |
+| REQ-024 | 7/8 | C2 | “configured with … `MicrosoftAppPassword` set to the client secret” | Q-019: where the secret is stored and who may read it. Misreading: commit the client secret to a configuration file in source control. |
+| REQ-025 | 8/8 | — | — | No rewrite needed. Misreading (prevented by text): letting the Azure Bot create a new App ID instead of reusing the app registration's. |
+| REQ-026 | 8/8 | — | — | No rewrite needed. Misreading (prevented by text): assuming the Teams channel is on by default. |
+| REQ-027 | 7/8 | C2 | “Group Chat (if required)” | Q-017: decide Group Chat scope. Misreading: enable Group Chat because the portal lists it. |
+| REQ-028 | 8/8 | — | — | No rewrite needed. Q-020 (privacy of read messages) remains open but does not change this statement. Misreading (prevented by text): requesting tenant-wide message-read permissions instead of the two named ones. |
+| REQ-029 | 7/8 | C2 | “Send notifications enabled” with no trigger, content or recipient | Q-016 and Q-021: what is notified, when, and to whom. Misreading: post every alert to every scope the bot is installed in. |
+| REQ-030 | 6/8 | C2, C3 | “Single tenant or Multi-tenant” | Q-018: choose the account type. No discriminating test is possible until then. Misreading: accept a multi-tenant default, letting other tenants use the bot. |
+| REQ-031 | 7/8 | C2 | “expiry” with no period or rotation | Rewritten (loop 1): success criterion was "expiry equals [NEEDS CLARIFICATION]", not measurable; now "expiry date is set" from Step 1.1, with the period in AC-031.3. Q-019: period and rotation. Misreading: choose the longest expiry the portal allows and never rotate. |
+| REQ-032 | 7/8 | C2 | “submitted through Teams Admin Center”; installation also depends on an approval step the page does not describe | Loop 1 marked the approval step in AC-032.1. Q-017: audience and approver. Misreading: sideload the package instead of submitting it through Teams Admin Center. |
 
 ## Acceptance criteria and success criteria (proposed)
 
@@ -55,24 +65,34 @@ Two revision passes were completed. The first used source-stated numeric example
 | REQ-020 | Keep AC-020.1 with markers; Q-002 must define service groups and the priority relationship. Success criterion remains marked pending that answer. |
 | REQ-021 | Keep AC-021.1 and success criterion with markers; Q-005 must define the threshold and measurement. |
 | REQ-022 | Keep AC-022.1–AC-022.3 and success criterion; Q-004 must define cue scope and precedence. |
+| REQ-023 | Statement and success criterion rewritten to describe the Messaging Endpoint as the backend's public HTTPS URL. Keep AC-023.1; add AC-023.2: Given the backend application is deployed, when an HTTPS request is sent from the public internet to `https://[NEEDS CLARIFICATION: public domain]/api/messages`, then the backend application receives the request. Q-022/Q-023 open. |
+| REQ-024 | Keep AC-024.1 and success criterion; Q-019 must define secret storage and access. |
+| REQ-025 | Keep AC-025.1 and success criterion; no rewrite needed. |
+| REQ-026 | Keep AC-026.1 and success criterion; no rewrite needed. |
+| REQ-027 | Keep AC-027.1–AC-027.2 and success criterion; Q-017 must decide Group Chat. |
+| REQ-028 | Keep AC-028.1 and success criterion; no rewrite needed. |
+| REQ-029 | Keep AC-029.1–AC-029.2 and success criterion; Q-016/Q-021 must define triggers, content and recipients. |
+| REQ-030 | Keep AC-030.1 and success criterion with markers; Q-018 must choose the account type. |
+| REQ-031 | Success criterion: The client secret has an expiry date set (yes/no). AC-031.1: Given the client secret under Certificates & Secrets, when it is inspected, then an expiry date is set. Keep AC-031.2. Add AC-031.3: Given the client secret under Certificates & Secrets, when its expiry is inspected, then the expiry period is [NEEDS CLARIFICATION: what period?]. Q-019 open. |
+| REQ-032 | Keep success criterion. AC-032.1: … when it is submitted through Teams Admin Center and [NEEDS CLARIFICATION: approved by whom?], then the bot can be installed inside Microsoft Teams. Q-017 open. |
 
-No new open question was needed beyond Q-015, already present in `harvested.md` for category-label conflicts. Existing markers are retained wherever required source details are absent.
+One new open question was raised this round: Q-023 (security / privacy) on authenticating requests to the public `/api/messages` endpoint. Existing markers are retained wherever required source details are absent.
 
 ## Needs human
 
-After two review passes, these 19 requirements still fail at least one rubric check and need answers to existing questions: REQ-001–REQ-006, REQ-009–REQ-016, and REQ-018–REQ-022. They are marked `needs-human` in `harvested.md`. Their IDs and clarification markers are retained.
+After two review passes, these 26 requirements still fail at least one rubric check and need answers to open questions: REQ-001–REQ-006, REQ-009–REQ-016, REQ-018–REQ-024, and REQ-027, REQ-029–REQ-032. They are marked `needs-human` in `harvested.md`. Their IDs and clarification markers are retained.
 
-No possible discriminating acceptance test can yet be completed for REQ-012, REQ-018, REQ-019, REQ-020, or REQ-021 because the snapshot omits quantities, definitions, evidence rules, or the threshold. Other needs-human requirements have concrete example cases but unresolved rule boundaries or scope.
+No possible discriminating acceptance test can yet be completed for REQ-012, REQ-018, REQ-019, REQ-020, REQ-021 or REQ-030 because the snapshot omits quantities, definitions, evidence rules, the threshold, or the account-type choice. Other needs-human requirements have concrete example cases but unresolved rule boundaries or scope.
 
 ## Summary
 
-- Requirements passing 8/8: 3 of 22.
-- Average score: 6.82/8.
+- Requirements passing 8/8: 6 of 32 (REQ-007, REQ-008, REQ-017, REQ-025, REQ-026, REQ-028).
+- Average score: 6.94/8.
 - Weak-word hits from the rubric list: 0.
-- Requirements without a possible acceptance test: 5 (REQ-012, REQ-018, REQ-019, REQ-020, REQ-021).
-- Requirements without a measurable success criterion: 2 (REQ-019 and REQ-020).
+- Requirements without a possible acceptance test: 6 (REQ-012, REQ-018, REQ-019, REQ-020, REQ-021, REQ-030).
+- Requirements without a measurable success criterion: 3 (REQ-019, REQ-020, REQ-030).
 - Inferred requirements: 0.
 - Conflicts recorded: 0 direct contradictions; category-label alternatives are unresolved in Q-015.
-- Open questions: 14 (scope 2, security/privacy 1, user experience 0, technical detail 11).
+- Open questions: 22 (scope 4, security/privacy 5, user experience 1, technical detail 12); 1 new this round (Q-023).
 
 Next: run `/speckit-docs-to-spec-clarify` to resolve the highest-ranked open questions, up to five at a time.
