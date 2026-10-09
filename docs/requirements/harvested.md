@@ -1,6 +1,6 @@
 # Harvested requirements
 
-Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules · Focus: all snapshot content
+Snapshot: 2026-10-09T08:54:19+00:00 · Sources: astra-alert-rules · Focus: all snapshot content
 
 ## Requirements
 
@@ -265,6 +265,109 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules · Focus: all 
 - **Sources:** [astra-alert-rules/page-1398800396 § 1. 5XX Errors (API / Backend)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The source says rate or occurrence count metrics are optional and message semantics determine validity when metrics are not provided.
 
+### REQ-023 Expose the bot messaging endpoint
+- **Statement:** The backend application shall expose the bot messaging endpoint at `https://<public-domain>/api/messages` on a public HTTPS endpoint. [NEEDS CLARIFICATION: what public domain hosts the endpoint in each environment?]
+- **Success criterion:** The Azure Bot resource's Messaging Endpoint is set to `https://<public-domain>/api/messages` (yes/no); [NEEDS CLARIFICATION: what public domain applies?]
+- **Acceptance criteria:**
+	- AC-023.1 Given the Azure Bot resource, when its Configuration is inspected, then the Messaging Endpoint is `https://[NEEDS CLARIFICATION: public domain]/api/messages`.
+- **Type:** functional (integration)
+- **Status:** needs-clarification
+- **Sources:** [astra-alert-rules/page-1514635295 § Prerequisites](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams), [astra-alert-rules/page-1514635295 § Step 3: Configure Messaging Endpoint](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** A public HTTPS endpoint is a prerequisite; Step 3 sets the messaging endpoint to `https://<your-public-domain>/api/messages`.
+
+### REQ-024 Configure bot credentials in the backend
+- **Statement:** The backend application shall be configured with `MicrosoftAppId` set to the Application (Client) ID, `MicrosoftAppPassword` set to the client secret, and `MicrosoftAppTenantId` set to the Directory (Tenant) ID. [NEEDS CLARIFICATION: where must the client secret be stored, and who may read it?]
+- **Success criterion:** All 3 settings are present in the backend configuration and hold the values from the Azure App Registration (yes/no).
+- **Acceptance criteria:**
+	- AC-024.1 Given the app registration's client ID, client secret and tenant ID, when the backend configuration is inspected, then `MicrosoftAppId`, `MicrosoftAppPassword` and `MicrosoftAppTenantId` hold those values.
+- **Type:** functional (configuration)
+- **Status:** needs-clarification
+- **Sources:** [astra-alert-rules/page-1514635295 § Step 1.1: Create Client Secret](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams), [astra-alert-rules/page-1514635295 § Step 7: Application Configuration](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** Steps 1.1 and 7 map the client ID, client secret and tenant ID to these three setting names.
+
+### REQ-025 Use one App ID for the bot and Teams app
+- **Statement:** The Azure Bot resource's Microsoft App ID, the Teams app's App ID and the Teams app's Bot ID shall each equal the Azure App Registration's Application (Client) ID.
+- **Success criterion:** All 3 IDs equal the Application (Client) ID (yes/no).
+- **Acceptance criteria:**
+	- AC-025.1 Given the Azure App Registration's Application (Client) ID, when the Azure Bot's Microsoft App ID, the Teams app's App ID and its Bot ID are compared with it, then all 3 match.
+- **Type:** non-functional (configuration)
+- **Status:** confirmed
+- **Sources:** [astra-alert-rules/page-1514635295 § Step 2: Create Azure Bot Resource](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams), [astra-alert-rules/page-1514635295 § 5.3 Configure App ID](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams), [astra-alert-rules/page-1514635295 § 5.4 Configure Bot](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** Step 2 selects the existing app registration; 5.3 states the App ID must match the Azure Bot App ID; 5.4 sets Bot ID to the same client ID.
+
+### REQ-026 Enable the Microsoft Teams channel
+- **Statement:** The Azure Bot resource shall have the Microsoft Teams channel enabled.
+- **Success criterion:** Microsoft Teams is listed as an enabled channel on the Azure Bot resource (yes/no).
+- **Acceptance criteria:**
+	- AC-026.1 Given the Azure Bot resource, when its Channels are inspected, then Microsoft Teams is enabled.
+- **Type:** functional (integration)
+- **Status:** confirmed
+- **Sources:** [astra-alert-rules/page-1514635295 § Step 4: Enable Microsoft Teams Channel](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** Step 4 selects Microsoft Teams under Channels and saves, which connects the bot to Teams.
+
+### REQ-027 Declare bot scopes
+- **Statement:** The Teams app shall declare the Personal and Team bot scopes. [NEEDS CLARIFICATION: is the Group Chat scope required?]
+- **Success criterion:** The app manifest declares the Personal and Team scopes (yes/no); [NEEDS CLARIFICATION: must it also declare Group Chat?]
+- **Acceptance criteria:**
+	- AC-027.1 Given the downloaded app manifest, when the bot scopes are inspected, then Personal and Team are declared.
+	- AC-027.2 Given the downloaded app manifest, when the bot scopes are inspected, then Group Chat is [NEEDS CLARIFICATION: declared or not declared?].
+- **Type:** functional (integration)
+- **Status:** needs-clarification
+- **Sources:** [astra-alert-rules/page-1514635295 § 5.4 Configure Bot](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** Supported scopes are Personal, Team, and Group Chat "(if required)".
+
+### REQ-028 Request Teams message-read permissions
+- **Statement:** The Teams app shall request the `ChannelMessage.Read.Group` and `ChatMessage.Read.Chat` permissions.
+- **Success criterion:** The app manifest declares both permissions (yes/no).
+- **Acceptance criteria:**
+	- AC-028.1 Given the downloaded app manifest, when its permissions are inspected, then `ChannelMessage.Read.Group` and `ChatMessage.Read.Chat` are declared.
+- **Type:** non-functional (security / permissions)
+- **Status:** confirmed
+- **Sources:** [astra-alert-rules/page-1514635295 § 5.4 Configure Bot](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** 5.4 lists these two permissions.
+
+### REQ-029 Enable bot notifications
+- **Statement:** The Teams bot shall have Send notifications enabled. [NEEDS CLARIFICATION: which events trigger a notification, what does it contain, and in which scope is it sent?]
+- **Success criterion:** Send notifications is enabled in the Teams app's bot configuration (yes/no).
+- **Acceptance criteria:**
+	- AC-029.1 Given the Teams app's bot configuration, when it is inspected, then Send notifications is enabled.
+	- AC-029.2 Given [NEEDS CLARIFICATION: which triggering event?], when it occurs, then the bot sends a notification to [NEEDS CLARIFICATION: which scope and recipients?].
+- **Type:** functional (notification)
+- **Status:** needs-clarification
+- **Sources:** [astra-alert-rules/page-1514635295 § 5.4 Configure Bot](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** 5.4 says to enable Send notifications; no trigger or content is described.
+
+### REQ-030 Set the app registration account type
+- **Statement:** The Azure App Registration shall use the [NEEDS CLARIFICATION: single-tenant or multi-tenant?] supported account type.
+- **Success criterion:** The app registration's supported account type equals the required type (yes/no); [NEEDS CLARIFICATION: single-tenant or multi-tenant?]
+- **Acceptance criteria:**
+	- AC-030.1 Given the Azure App Registration, when its supported account type is inspected, then it is [NEEDS CLARIFICATION: single-tenant or multi-tenant?].
+- **Type:** non-functional (security / access)
+- **Status:** needs-clarification
+- **Sources:** [astra-alert-rules/page-1514635295 § Step 1: Create Azure App Registration](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** Step 1 offers "Single tenant or Multi-tenant" without choosing.
+
+### REQ-031 Set a client secret expiry
+- **Statement:** The Azure App Registration's client secret shall have an expiry. [NEEDS CLARIFICATION: what expiry period applies, and what must happen before the secret expires?]
+- **Success criterion:** The client secret's expiry equals [NEEDS CLARIFICATION: what period?] (yes/no).
+- **Acceptance criteria:**
+	- AC-031.1 Given the client secret under Certificates & Secrets, when its expiry is inspected, then it is [NEEDS CLARIFICATION: what period?].
+	- AC-031.2 Given the client secret is [NEEDS CLARIFICATION: how long?] from expiry, when that point is reached, then [NEEDS CLARIFICATION: what rotation action occurs, and who performs it?].
+- **Type:** non-functional (security)
+- **Status:** needs-clarification
+- **Sources:** [astra-alert-rules/page-1514635295 § Step 1.1: Create Client Secret](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** Step 1.1 says to add a description and expiry; no period is given.
+
+### REQ-032 Publish the Teams app through Teams Admin Center
+- **Statement:** The Teams app package shall be submitted through Teams Admin Center. [NEEDS CLARIFICATION: which users or teams must be able to install the app, and who approves the submission?]
+- **Success criterion:** The bot can be installed inside Microsoft Teams after submission (yes/no).
+- **Acceptance criteria:**
+	- AC-032.1 Given the app package downloaded from Developer Portal containing `manifest.json`, `color.png` and `outline.png`, when it is submitted through Teams Admin Center, then the bot can be installed inside Microsoft Teams.
+- **Type:** functional (deployment)
+- **Status:** needs-clarification
+- **Sources:** [astra-alert-rules/page-1514635295 § Step 5: Create Teams App Manifest](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams), [astra-alert-rules/page-1514635295 § 5.5 Generate and Download manifest.json](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams), [astra-alert-rules/page-1514635295 § Step 6: Upload/Submit the App to Teams](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) — `.specify/harvest/raw/astra-alert-rules/page-1514635295.md`
+- **Evidence:** Step 5 is required to install the bot in Teams; 5.5 downloads the package; Step 6 submits it via Teams Admin Center.
+
 ## Conflicts
 | Conflict | Requirements | Sources | Question ID |
 |---|---|---|---|
@@ -275,7 +378,13 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules · Focus: all 
 |---|---:|---|---|---|---|---|
 | Q-001 | 1 | Scope | Which alerting system and alert population does this rule set govern? | REQ-001–REQ-022 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
 | Q-002 | 1 | Scope | Which service names belong to the business-critical, production-business, and non-critical production groups, and how should “higher” priority be represented? | REQ-003, REQ-009, REQ-020 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
+| Q-016 | 1 | Scope | Is the Teams bot the channel that delivers the alert validation, category and priority results of REQ-001–REQ-022? What messages does it send or receive? | REQ-023–REQ-032 | [astra-alert-rules/page-1514635295](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) | open |
+| Q-017 | 1 | Scope | Which users or teams must be able to install the app, who approves the Teams Admin Center submission, and is the Group Chat scope required? | REQ-027, REQ-032 | [astra-alert-rules/page-1514635295](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) | open |
 | Q-003 | 2 | Security / privacy | The decision tree includes Security for fraud and unauthorized access, but gives no validation or priority rule. Should those alerts follow additional security-specific handling? Specify the handling. | REQ-016 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
+| Q-018 | 2 | Security / privacy | Should the app registration be single-tenant or multi-tenant? | REQ-030 | [astra-alert-rules/page-1514635295](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) | open |
+| Q-019 | 2 | Security / privacy | Where must the client secret be stored, who may read it, what expiry period applies, and how and when is it rotated? | REQ-024, REQ-031 | [astra-alert-rules/page-1514635295](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) | open |
+| Q-020 | 2 | Security / privacy | `ChannelMessage.Read.Group` and `ChatMessage.Read.Chat` let the bot read messages in the teams and chats where it is installed. What message content may it read, and may it store that content (if so, for how long)? | REQ-028 | [astra-alert-rules/page-1514635295](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) | open |
+| Q-021 | 3 | User experience | Which events trigger a Teams notification, what does it contain, and in which scope (Personal, Team, Group Chat) is it sent? | REQ-029 | [astra-alert-rules/page-1514635295](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) | open |
 | Q-004 | 4 | Technical detail | Which message patterns indicate 5XX failure or noise beyond the examples, which outcome takes precedence when both kinds of cue are present, and what qualifies as intermittent and auto-recovered for P4? | REQ-001, REQ-002, REQ-003, REQ-022 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
 | Q-005 | 4 | Technical detail | What threshold and measurement are meant by “below threshold” for 5XX alerts? | REQ-021 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
 | Q-006 | 4 | Technical detail | What interval and measurement source define a latency datapoint, and what duration and recovery evidence qualify as short-lived or self-recovered latency? | REQ-004, REQ-006 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
@@ -287,12 +396,13 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules · Focus: all 
 | Q-012 | 4 | Technical detail | What minimum data is required, what evidence sources may be used, and what should happen when evidence is inconclusive? | REQ-018, REQ-019 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
 | Q-014 | 4 | Technical detail | How should the system choose a category when an alert matches indicators from multiple decision-tree categories? | REQ-016 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
 | Q-015 | 4 | Technical detail | For HTTP 5XX alerts, should the category be Server issue or Application backend failure? For latency spikes, how do Application performance and Infra bottleneck map to the cause classifications in REQ-005? | REQ-005, REQ-016 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
+| Q-022 | 4 | Technical detail | What public domain hosts `/api/messages` in each environment? | REQ-023 | [astra-alert-rules/page-1514635295](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1514635295/Azure+Bot+integration+with+MS+Teams) | open |
 
 ## Assumed, pending confirmation
 None. No working assumptions were needed for this round.
 
 ## Inferred (no direct source)
-None. Requirements above are grounded in the captured page; unresolved interpretations are marked for clarification.
+None. Requirements above are grounded in the captured pages; unresolved interpretations are marked for clarification.
 
 ## Clarification log
 | Date | QID | Answer (summary) | Answered by | Requirements updated |
