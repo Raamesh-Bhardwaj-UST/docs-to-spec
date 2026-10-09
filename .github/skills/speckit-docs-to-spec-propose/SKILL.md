@@ -1,6 +1,14 @@
 ---
-description: "Group confirmed requirements into candidate features and write ready-to-run assess and specify prompts"
+name: speckit-docs-to-spec-propose
+description: Group confirmed requirements into candidate features and write ready-to-run
+  assess and specify prompts
+compatibility: Requires spec-kit project structure with .specify/ directory
+metadata:
+  author: Raamesh Bhardwaj (UST PACE)
+  source: extension:docs-to-spec
 ---
+
+# Docs To Spec Propose Skill
 
 ## User input
 

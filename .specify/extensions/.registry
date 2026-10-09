@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "docs-to-spec": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:dd58e1d5d5ea0ffa485a218b4f5207227ce3b15e8986df27f8e3bc7002a926c3",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {},
+      "registered_skills": [
+        "speckit-docs-to-spec-setup",
+        "speckit-docs-to-spec-harvest",
+        "speckit-docs-to-spec-extract",
+        "speckit-docs-to-spec-review",
+        "speckit-docs-to-spec-clarify",
+        "speckit-docs-to-spec-propose"
+      ],
+      "installed_at": "2026-10-09T07:12:50.098115+00:00"
+    }
+  }
+}

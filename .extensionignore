@@ -1,0 +1,13 @@
+# Files that stay in the clone and are not copied into .specify/extensions/docs-to-spec/
+.git/
+.github/
+.specify/
+.venv/
+.vscode/
+docs/
+evals/
+Claude outputs/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+dist/

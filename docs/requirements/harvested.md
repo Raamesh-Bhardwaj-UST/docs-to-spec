@@ -1,6 +1,6 @@
 # Harvested requirements
 
-Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · Focus: all snapshot content
+Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules · Focus: all snapshot content
 
 ## Requirements
 

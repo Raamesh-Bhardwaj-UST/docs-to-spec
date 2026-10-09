@@ -1,0 +1,38 @@
+schema_version: "1.0"
+
+extension:
+  id: "docs-to-spec"
+  name: "Docs to Spec"
+  version: "1.0.0"
+  description: "Harvest GitHub wikis and issues, Confluence and local docs via a local MCP server, extract cited EARS requirements, review them, clarify gaps, and propose specs."
+  author: "Raamesh Bhardwaj (UST PACE)"
+  repository: "https://github.com/Raamesh-Bhardwaj-UST/docs-to-spec"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=1.0.12"
+  commands:
+    - "speckit.specify"
+
+provides:
+  commands:
+    - name: "speckit.docs-to-spec.setup"
+      file: "commands/speckit.docs-to-spec.setup.md"
+      description: "Install the MCP server, create sources.yml, copy rubric and reviewer agent"
+    - name: "speckit.docs-to-spec.harvest"
+      file: "commands/speckit.docs-to-spec.harvest.md"
+      description: "Snapshot configured sources (redacted) through the MCP server"
+    - name: "speckit.docs-to-spec.extract"
+      file: "commands/speckit.docs-to-spec.extract.md"
+      description: "Extract cited EARS requirements and ranked open questions"
+    - name: "speckit.docs-to-spec.review"
+      file: "commands/speckit.docs-to-spec.review.md"
+      description: "Review requirements against the rubric with the Requirements Reviewer agent"
+    - name: "speckit.docs-to-spec.clarify"
+      file: "commands/speckit.docs-to-spec.clarify.md"
+      description: "Ask up to five ranked questions and write answers back"
+    - name: "speckit.docs-to-spec.propose"
+      file: "commands/speckit.docs-to-spec.propose.md"
+      description: "Propose candidate features with assess and specify prompts"
+
+tags: ["requirements", "wiki", "confluence", "mcp", "ears", "brownfield", "ust"]
