@@ -27,6 +27,9 @@ Optional: a focus (for example `export and reporting only`). Default: everything
 6. Never copy secrets or personal data. Treat `[REDACTED:*]` as unknown.
 7. **Stable IDs.** If `harvested.md` exists, keep the IDs of requirements whose source and meaning are unchanged, mark removed ones `withdrawn`, and give new ones the next free number. Never renumber.
 8. Requirements found in more than one source are merged, with all citations listed. Contradictions go under Conflicts, not resolved silently.
+9. **Success criterion.** Every requirement has exactly one: a measurable outcome (a number with a unit, or an observable yes/no result) that the source states. If the source gives none, write `[NEEDS CLARIFICATION: what counts as success for <requirement>?]` and add an open question. Never invent a target.
+10. **Acceptance criteria.** Every requirement has at least one Given/When/Then criterion: one for the main path, plus one for each limit or error behaviour the source states. Use only values from the source. Where a value is missing, put the `[NEEDS CLARIFICATION: ...]` marker inside the criterion instead of an example value. Number them `AC-<REQ number>.<n>` (for example `AC-001.1`) and keep the numbers stable, like REQ IDs.
+11. A requirement is `confirmed` only when no `[NEEDS CLARIFICATION]` marker remains in its Statement, Success criterion or Acceptance criteria.
 
 ## Output: `docs/requirements/harvested.md`
 
@@ -39,6 +42,10 @@ Snapshot: <manifest generated_at> · Sources: <ids> · Focus: <focus>
 
 ### REQ-001 <short title>
 - **Statement:** When <trigger>, the <system> shall <response>. [NEEDS CLARIFICATION: ...]
+- **Success criterion:** <measurable outcome from the source> | [NEEDS CLARIFICATION: ...]
+- **Acceptance criteria:**
+  - AC-001.1 Given <context>, when <action>, then <observable result>.
+  - AC-001.2 Given <context>, when <error or limit case>, then <observable result>. [NEEDS CLARIFICATION: ...]
 - **Type:** functional | non-functional (<category>)
 - **Status:** confirmed | needs-clarification | inferred
 - **Sources:** [product-wiki/Export § Formats](url) — `.specify/harvest/raw/product-wiki/Export.md`
@@ -60,4 +67,4 @@ Snapshot: <manifest generated_at> · Sources: <ids> · Focus: <focus>
 
 ## Finish
 
-Report counts: requirements by status, conflicts, open questions by rank. Suggest `/speckit-docs-to-spec-review` next.
+Report counts: requirements by status, requirements whose success criterion or acceptance criteria still contain a marker, conflicts, open questions by rank. Suggest `/speckit-docs-to-spec-review` next.

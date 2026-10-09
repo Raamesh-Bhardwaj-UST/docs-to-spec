@@ -100,8 +100,8 @@ harvest (MCP, redacted snapshot) → [gate: commit snapshot] → extract → rev
 |---------|--------|
 | `/speckit-docs-to-spec-setup` | Server venv, `sources.yml`, rubric, reviewer agent, `.vscode/mcp.json` |
 | `/speckit-docs-to-spec-harvest` | `.specify/harvest/raw/<source>/*.md` and `manifest.json`. Pass a source id to refresh one source, or `status`. **Gate:** review the manifest and a sample of files, then commit the snapshot. |
-| `/speckit-docs-to-spec-extract` | `docs/requirements/harvested.md` (EARS statements, citations, conflicts, ranked open questions, stable REQ IDs) |
-| `/speckit-docs-to-spec-review` | `docs/requirements/review.md` (rubric scores, acceptance tests, "Needs human"); at most two revision loops |
+| `/speckit-docs-to-spec-extract` | `docs/requirements/harvested.md` (EARS statements, a measurable success criterion and Given/When/Then acceptance criteria per requirement, citations, conflicts, ranked open questions, stable REQ and AC IDs) |
+| `/speckit-docs-to-spec-review` | `docs/requirements/review.md` (rubric scores, proposed acceptance and success criteria, "Needs human"); fixes are written back into `harvested.md`; at most two revision loops |
 | `/speckit-docs-to-spec-clarify` | Answers written back to `harvested.md` with a clarification log; deferred answers go under "Assumed, pending confirmation" |
 | `/speckit-docs-to-spec-propose` | `docs/requirements/candidates.md` with assess and specify prompts. **Gate:** review it before starting any spec. |
 
