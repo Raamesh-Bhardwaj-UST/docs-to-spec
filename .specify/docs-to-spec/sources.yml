@@ -31,4 +31,4 @@ sources:
     type: confluence
     base_url: https://ust-pace.atlassian.net/wiki
     # ancestor alone excludes the root page itself
-    cql: "type = page AND (id = 1398800396 OR ancestor = 1398800396) ORDER BY lastmodified DESC"
+    cql: "type = page AND (id = 1398800396 OR ancestor = 1398800396 OR id = 1514635295 OR ancestor = 1514635295) ORDER BY lastmodified DESC"
