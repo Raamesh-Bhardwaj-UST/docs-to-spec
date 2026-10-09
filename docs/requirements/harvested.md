@@ -10,7 +10,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-001.1 Given an alert with HTTP 500, 502, 503, or 504 and a message containing “unable to connect,” “failed,” “timeout,” or “unreachable,” when the system validates it, then the alert is marked VALID.
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 1. 5XX Errors (API / Backend)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** HTTP 500, 502, 503, and 504 are examples of 5XX triggers; failure-message examples include “unable to connect,” “failed,” “timeout,” and “unreachable.”
 
@@ -20,7 +20,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-002.1 Given an alert with a 5XX code and a message containing “probe failure,” “transient,” “intermittent,” or “staging,” when the system validates it, then the alert is marked FALSE POSITIVE.
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 1. 5XX Errors (API / Backend)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** Noise-message examples are “probe failure,” “transient,” “intermittent,” and “staging.”
 
@@ -34,7 +34,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-003.4 Given an intermittent 5XX error that auto-recovered with no user impact, when priority is assigned, then the priority is P4. [NEEDS CLARIFICATION: what qualifies as intermittent and auto-recovered?]
 	- AC-003.5 Given a 5XX alert triggered by retries or synthetic-monitoring noise, when priority is assigned, then the priority is P5.
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 1. 5XX Errors (API / Backend)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The page lists P1–P5 conditions for 5XX alerts and separately says below-threshold alerts are FALSE POSITIVE → P5.
 
@@ -44,7 +44,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-004.1 Given API latency greater than 2 seconds for 3 consecutive datapoints, when the system evaluates latency, then it identifies a latency spike. [NEEDS CLARIFICATION: what interval and measurement source define each datapoint?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 2. Latency Spikes (API Latency > 2s)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The trigger is latency greater than 2 seconds for 3 consecutive datapoints.
 
@@ -55,7 +55,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-005.1 Given a latency spike and CPU usage greater than 80% or memory usage greater than 75%, when the system classifies the cause, then it identifies an infrastructure issue. [NEEDS CLARIFICATION: what measurement window and boundary rules apply?]
 	- AC-005.2 Given a latency spike and healthy infrastructure, when the system classifies the cause, then it identifies an application bottleneck. [NEEDS CLARIFICATION: what defines healthy infrastructure?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 2. Latency Spikes (API Latency > 2s)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** CPU above 80% or memory above 75% indicates infrastructure; healthy infrastructure indicates an application bottleneck.
 
@@ -69,7 +69,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-006.4 Given short-lived latency that self-recovered, when priority is assigned, then the priority is P4. [NEEDS CLARIFICATION: what duration and recovery evidence qualify?]
 	- AC-006.5 Given non-user-facing staging traffic with a latency alert, when priority is assigned, then the priority is P5.
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 2. Latency Spikes (API Latency > 2s)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The page lists P1–P5 conditions for latency alerts.
 
@@ -77,7 +77,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Statement:** When a Kubernetes pod restarts more than 5 times within 10 minutes, the system shall identify a pod restart loop.
 - **Success criterion:** The system identifies a pod restart loop when restarts exceed 5 within 10 minutes.
 - **Acceptance criteria:**
-	- AC-007.1 Given a Kubernetes pod with more than 5 restarts within 10 minutes, when the system evaluates the restart count, then it identifies a pod restart loop.
+	- AC-007.1 Given a Kubernetes pod with 6 restarts within 10 minutes, when the system evaluates the restart count, then it identifies a pod restart loop.
 - **Type:** functional
 - **Status:** confirmed
 - **Sources:** [astra-alert-rules/page-1398800396 § 3. Pod Restart Loop (Kubernetes)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
@@ -103,7 +103,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-009.4 Given an expected node-drain or maintenance restart, when priority is assigned, then the priority is P4.
 	- AC-009.5 Given an autoscaling-driven scheduled restart, when priority is assigned, then the priority is P5.
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 3. Pod Restart Loop (Kubernetes)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The page lists P1–P5 conditions for pod restart alerts.
 
@@ -114,7 +114,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-010.1 Given disk usage above 84% on a node not flagged for decommissioning, when the system evaluates usage, then it raises a disk usage alert. [NEEDS CLARIFICATION: what measurement interval applies?]
 	- AC-010.2 Given disk usage above 84% on a node flagged for decommissioning, when the system evaluates usage, then it ignores the alert. [NEEDS CLARIFICATION: does this suppress only new alerts or clear existing alerts?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 4. Disk Usage Alerts](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The trigger is usage above 84%; alerts are ignored if the node is flagged for decommissioning.
 
@@ -128,7 +128,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-011.4 Given a duplicate disk alert or an alert already ticketed or acknowledged, when priority is assigned, then the priority is P5.
 	- AC-011.5 Given disk usage above 84% but below 85%, when priority is assigned, then [NEEDS CLARIFICATION: what priority applies?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 4. Disk Usage Alerts](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The page lists P2–P5 conditions, while its alert trigger begins above 84%.
 
@@ -138,7 +138,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-012.1 Given a timeout or connection-refused error, when the system validates it, then it checks [NEEDS CLARIFICATION: how many] services and [NEEDS CLARIFICATION: how many] nodes and uses [NEEDS CLARIFICATION: what evidence] to confirm the error.
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 5. Network Errors (Timeout, Connection Refused)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The source categorizes timeout and connection-refused errors as network/connectivity and directs checking multiple services and nodes.
 
@@ -152,7 +152,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-013.4 Given a network error that succeeds on a single retry or is a temporary DNS failure, when priority is assigned, then the priority is P4. [NEEDS CLARIFICATION: what defines a temporary DNS failure?]
 	- AC-013.5 Given a synthetic-probe timeout or false alarm, when priority is assigned, then the priority is P5. [NEEDS CLARIFICATION: what qualifies as a false alarm?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 5. Network Errors (Timeout, Connection Refused)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The page lists P1–P5 conditions for network errors.
 
@@ -162,7 +162,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-014.1 Given logs containing “payment failed,” “order creation failed,” “inventory mismatch,” or “redis failure,” when the system categorizes the alert, then it assigns Application / Business domain. [NEEDS CLARIFICATION: are these exact-match phrases or examples of broader indicators?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 6. Business Logic Failures (Logs)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** Listed indicators are “payment failed,” “order creation failed,” “inventory mismatch,” and “redis failure.”
 
@@ -177,15 +177,15 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-015.5 Given an unused feature-workflow error, when priority is assigned, then the priority is P5.
 	- AC-015.6 Given a “redis failure” indicator, when priority is assigned, then [NEEDS CLARIFICATION: what priority applies?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 6. Business Logic Failures (Logs)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The page lists P1–P5 conditions for business-logic failures.
 
 ### REQ-016 Categorize alerts by indicator
-- **Statement:** When an alert has one of the listed indicators, the system shall assign its corresponding category: HTTP 5XX or backend stack trace to Server issue; pod restarts or node pressure to Infrastructure; high latency alone to Application; DNS, routing, or connection refused to Network; fraud alerts or unauthorized access to Security; browser/client request failures to Client issue; and missing context or unclear logs to Unknown. [NEEDS CLARIFICATION: How should the system choose a category when indicators from multiple categories are present?]
-- **Success criterion:** The category matches the source's indicator-to-category mapping; [NEEDS CLARIFICATION: how should the system choose when indicators from multiple categories are present?]
+- **Statement:** When an alert matches a source-listed indicator, the system shall assign its stated category: HTTP 5XX or backend stack trace to Server issue; pod restarts or node pressure to Infrastructure; high latency alone to Application; DNS, routing, or connection refused to Network; fraud alerts or unauthorized access to Security; browser/client request failures to Client issue; missing context or unclear logs to Unknown; latency spikes to Application performance or Infra bottleneck; disk usage alerts to Infrastructure; and network errors to Network / Connectivity. [NEEDS CLARIFICATION: The 5XX section also names Application backend failure; which category label applies to HTTP 5XX alerts? Which category label applies to latency spikes? How should the system choose a category when indicators from multiple categories are present?]
+- **Success criterion:** Each source-listed indicator is assigned its stated category; [NEEDS CLARIFICATION: which category label applies to HTTP 5XX alerts and latency spikes, and how should the system choose when indicators from multiple categories are present?]
 - **Acceptance criteria:**
-	- AC-016.1 Given an HTTP 5XX or backend stack trace, when the system categorizes the alert, then it assigns Server issue.
+	- AC-016.1 Given an HTTP 5XX alert, when the system categorizes it, then it assigns [NEEDS CLARIFICATION: Server issue or Application backend failure?].
 	- AC-016.2 Given pod restarts or node pressure, when the system categorizes the alert, then it assigns Infrastructure.
 	- AC-016.3 Given high latency only, when the system categorizes the alert, then it assigns Application.
 	- AC-016.4 Given DNS, routing, or connection-refused indicators, when the system categorizes the alert, then it assigns Network.
@@ -193,16 +193,20 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-016.6 Given a browser/client request failure, when the system categorizes the alert, then it assigns Client issue.
 	- AC-016.7 Given missing context or unclear logs, when the system categorizes the alert, then it assigns Unknown.
 	- AC-016.8 Given indicators from multiple categories, when the system categorizes the alert, then [NEEDS CLARIFICATION: which category takes precedence?]
+	- AC-016.9 Given a latency spike, when the system categorizes it, then it assigns [NEEDS CLARIFICATION: Application performance or Infra bottleneck, and how does this correspond to the cause classification?]
+	- AC-016.10 Given a disk usage alert, when the system categorizes it, then it assigns Infrastructure.
+	- AC-016.11 Given a network error, when the system categorizes it, then it assigns Network / Connectivity.
+	- AC-016.12 Given a backend stack trace, when the system categorizes the alert, then it assigns Server issue.
 - **Type:** functional
-- **Status:** needs-clarification
-- **Sources:** [astra-alert-rules/page-1398800396 § Categorization Decision Tree](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
-- **Evidence:** The decision table maps the listed indicators to categories.
+- **Status:** needs-human
+- **Sources:** [astra-alert-rules/page-1398800396 § Categorization Decision Tree](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca), [astra-alert-rules/page-1398800396 § 1. 5XX Errors (API / Backend)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca), [astra-alert-rules/page-1398800396 § 2. Latency Spikes (API Latency > 2s)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca), [astra-alert-rules/page-1398800396 § 3. Pod Restart Loop (Kubernetes)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca), [astra-alert-rules/page-1398800396 § 4. Disk Usage Alerts](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca), [astra-alert-rules/page-1398800396 § 5. Network Errors (Timeout, Connection Refused)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
+- **Evidence:** The decision table and alert-specific sections map HTTP 5XX, latency, pod restart, disk usage, and network indicators to categories; the 5XX and latency sections state alternative category labels.
 
 ### REQ-017 Resolve multiple applicable rules
 - **Statement:** When multiple rules apply to an alert, the system shall select the highest severity, where P1 is the worst severity.
 - **Success criterion:** When multiple rules apply, the selected priority is the highest severity, with P1 worst.
 - **Acceptance criteria:**
-	- AC-017.1 Given multiple applicable priority rules, when the system resolves priority, then it selects the highest severity and treats P1 as the worst severity.
+	- AC-017.1 Given an alert to which P1 and P4 priority rules apply, when the system resolves priority, then it selects P1 as the highest severity.
 - **Type:** functional
 - **Status:** confirmed
 - **Sources:** [astra-alert-rules/page-1398800396 § Global Rules](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
@@ -214,7 +218,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-018.1 Given alert data that meets the source's definition of insufficient, when the system classifies the alert, then it assigns Unknown and P5. [NEEDS CLARIFICATION: what minimum data qualifies as insufficient?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § Global Rules](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The source assigns Unknown and P5 when data is insufficient.
 
@@ -225,7 +229,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-019.1 Given evidence sufficient under the source's rules, when the system assigns priority, then it bases the priority on that evidence and not a guess. [NEEDS CLARIFICATION: which evidence sources are allowed?]
 	- AC-019.2 Given inconclusive evidence, when the system assigns priority, then [NEEDS CLARIFICATION: what should the system do?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § Global Rules](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The source says priority must never be based on a guess, only evidence.
 
@@ -235,7 +239,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-020.1 Given an alert for a business-critical service and an otherwise comparable alert for another service, when priorities are assigned, then [NEEDS CLARIFICATION: what priority relationship demonstrates “higher,” and which services are business-critical?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § Global Rules](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The source states that business-critical services are always prioritized higher.
 
@@ -245,7 +249,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 - **Acceptance criteria:**
 	- AC-021.1 Given a 5XX alert below the source-defined threshold, when the system evaluates it, then it marks the alert FALSE POSITIVE and assigns P5. [NEEDS CLARIFICATION: what threshold and measurement define “below”?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 1. 5XX Errors (API / Backend)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The source states “If below threshold → FALSE POSITIVE → P5” but does not define the threshold.
 
@@ -257,7 +261,7 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 	- AC-022.2 Given a 5XX alert without rate or occurrence-count metrics and a message containing a listed noise cue, when the system determines validity, then it uses message semantics to mark the alert FALSE POSITIVE.
 	- AC-022.3 Given a 5XX alert whose message contains both failure and noise cues, when the system determines validity, then [NEEDS CLARIFICATION: which result takes precedence?]
 - **Type:** functional
-- **Status:** needs-clarification
+- **Status:** needs-human
 - **Sources:** [astra-alert-rules/page-1398800396 § 1. 5XX Errors (API / Backend)](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) — `.specify/harvest/raw/astra-alert-rules/page-1398800396.md`
 - **Evidence:** The source says rate or occurrence count metrics are optional and message semantics determine validity when metrics are not provided.
 
@@ -269,11 +273,11 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 ## Open questions (ranked)
 | QID | Rank | Impact | Question | Affects | Source | State |
 |---|---:|---|---|---|---|---|
-| Q-001 | 1 | Scope | Which alerting system and alert population does this rule set govern? | REQ-001–REQ-022 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
-| Q-002 | 1 | Scope | Which service names belong to the business-critical, production-business, and non-critical production groups, and how should “higher” priority be represented? | REQ-003, REQ-009, REQ-020 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
-| Q-003 | 2 | Security / privacy | The decision tree includes Security for fraud and unauthorized access, but gives no validation or priority rule. Should those alerts follow additional security-specific handling? | REQ-016 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
-| Q-004 | 4 | Technical detail | Which message patterns indicate 5XX failure or noise beyond the examples, which outcome takes precedence when both kinds of cue are present, and what qualifies as intermittent and auto-recovered for P4? | REQ-001, REQ-002, REQ-003, REQ-022 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
-| Q-005 | 4 | Technical detail | What threshold and measurement are meant by “below threshold” for 5XX alerts? | REQ-021 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
+| Q-001 | 1 | Scope | Which alerting system and alert population does this rule set govern? | REQ-001–REQ-022 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
+| Q-002 | 1 | Scope | Which service names belong to the business-critical, production-business, and non-critical production groups, and how should “higher” priority be represented? | REQ-003, REQ-009, REQ-020 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
+| Q-003 | 2 | Security / privacy | The decision tree includes Security for fraud and unauthorized access, but gives no validation or priority rule. Should those alerts follow additional security-specific handling? Specify the handling. | REQ-016 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
+| Q-004 | 4 | Technical detail | Which message patterns indicate 5XX failure or noise beyond the examples, which outcome takes precedence when both kinds of cue are present, and what qualifies as intermittent and auto-recovered for P4? | REQ-001, REQ-002, REQ-003, REQ-022 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
+| Q-005 | 4 | Technical detail | What threshold and measurement are meant by “below threshold” for 5XX alerts? | REQ-021 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | deferred |
 | Q-006 | 4 | Technical detail | What interval and measurement source define a latency datapoint, and what duration and recovery evidence qualify as short-lived or self-recovered latency? | REQ-004, REQ-006 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
 | Q-007 | 4 | Technical detail | What measurement window and boundary rules define CPU above 80%, memory above 75%, and healthy infrastructure? | REQ-005 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
 | Q-008 | 4 | Technical detail | How should the disk policy classify usage above 84% but below 85%, how do the P4/P5 conditions interact with threshold-based P2/P3 priorities, and does a decommissioning flag suppress only new alerts or also clear existing alerts? | REQ-010, REQ-011 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
@@ -282,9 +286,10 @@ Snapshot: 2026-10-09T02:56:38+00:00 · Sources: astra-alert-rules, repo-docs · 
 | Q-011 | 4 | Technical detail | Are business-logic keywords exact matches, what defines order-processing degradation or an unused feature workflow, and what priority applies to “redis failure”? | REQ-014, REQ-015 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
 | Q-012 | 4 | Technical detail | What minimum data is required, what evidence sources may be used, and what should happen when evidence is inconclusive? | REQ-018, REQ-019 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
 | Q-014 | 4 | Technical detail | How should the system choose a category when an alert matches indicators from multiple decision-tree categories? | REQ-016 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
+| Q-015 | 4 | Technical detail | For HTTP 5XX alerts, should the category be Server issue or Application backend failure? For latency spikes, how do Application performance and Infra bottleneck map to the cause classifications in REQ-005? | REQ-005, REQ-016 | [astra-alert-rules/page-1398800396](https://ust-pace.atlassian.net/wiki/spaces/Astra/pages/1398800396/To+test+confluence+page+id+alert+rules+in+experian+rca) | open |
 
 ## Assumed, pending confirmation
-None. No clarification answers have been deferred.
+None. No working assumptions were needed for this round.
 
 ## Inferred (no direct source)
 None. Requirements above are grounded in the captured page; unresolved interpretations are marked for clarification.
@@ -292,3 +297,8 @@ None. Requirements above are grounded in the captured page; unresolved interpret
 ## Clarification log
 | Date | QID | Answer (summary) | Answered by | Requirements updated |
 |---|---|---|---|---|
+| 2026-10-09 | Q-001 | Deferred. | Raamesh-Bhardwaj-UST | — |
+| 2026-10-09 | Q-002 | Deferred. | Raamesh-Bhardwaj-UST | — |
+| 2026-10-09 | Q-003 | Confirmed security-specific handling is desired; the handling details were deferred. | Raamesh-Bhardwaj-UST | — |
+| 2026-10-09 | Q-004 | Deferred. | Raamesh-Bhardwaj-UST | — |
+| 2026-10-09 | Q-005 | Deferred. | Raamesh-Bhardwaj-UST | — |
