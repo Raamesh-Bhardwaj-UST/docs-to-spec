@@ -30,4 +30,5 @@ sources:
   - id: astra-alert-rules
     type: confluence
     base_url: https://ust-pace.atlassian.net/wiki
-    ancestor: "1398800396"
+    # ancestor alone excludes the root page itself
+    cql: "type = page AND (id = 1398800396 OR ancestor = 1398800396) ORDER BY lastmodified DESC"
